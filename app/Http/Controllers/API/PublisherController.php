@@ -14,6 +14,7 @@ use App\Http\Controllers\Requests\API\Publisher\PublisherDeleteRequest;
 use App\Http\Controllers\Requests\API\Publisher\PublisherGetRequest;
 use App\Http\Controllers\Requests\API\Publisher\PublisherPatchRequest;
 use App\Http\Controllers\Requests\API\Publisher\PublisherPostRequest;
+use App\Http\Controllers\Requests\GetRequest;
 use App\Services\PublisherService;
 
 class PublisherController extends APIController
@@ -50,5 +51,10 @@ class PublisherController extends APIController
     public function delete(PublisherDeleteRequest $request, int $id = null)
     {
         return parent::_delete($request, $id);
+    }
+
+    public function all(PublisherGetRequest $request)
+    {
+        return parent::_all($request);
     }
 }

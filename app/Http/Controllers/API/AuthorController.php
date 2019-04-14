@@ -14,6 +14,7 @@ use App\Http\Controllers\Requests\API\Author\AuthorDeleteRequest;
 use App\Http\Controllers\Requests\API\Author\AuthorGetRequest;
 use App\Http\Controllers\Requests\API\Author\AuthorPatchRequest;
 use App\Http\Controllers\Requests\API\Author\AuthorPostRequest;
+use App\Http\Controllers\Requests\GetRequest;
 use App\Services\AuthorService;
 
 class AuthorController extends APIController
@@ -28,7 +29,7 @@ class AuthorController extends APIController
         $relations = $request->getRelations();
         if ($relations != null) {
             /**
-             * @var AuthorService $genreService
+             * @var AuthorService $authorService
              */
             $authorService = $this->getService();
             $enhancedService = new GetAuthorDecorator($authorService);
@@ -50,5 +51,10 @@ class AuthorController extends APIController
     public function delete(AuthorDeleteRequest $request, int $id = null)
     {
         return parent::_delete($request, $id);
+    }
+
+    public function all(AuthorGetRequest $request)
+    {
+        return parent::_all($request);
     }
 }

@@ -54,6 +54,6 @@ class GenreController extends APIController
 
     public function all(GenreGetRequest $request)
     {
-        return $this->getService()->getAll($request->attributes());
+        return parent::_all($request);
     }
 }

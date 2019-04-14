@@ -1,79 +1,87 @@
 @extends('admin.master')
 @section('content')
 
+
     <!-- Main content -->
-        
-        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
-            <ul class="breadcrumb">
-                <li>
-                    <i class="ace-icon fa fa-home home-icon"></i>
-                    <a href="">Home</a>
-                </li>
 
-                
-                <li class="active">Author</li>
+    <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="ace-icon fa fa-home home-icon"></i>
+                <a href="">Home</a>
+            </li>
 
-            </ul><!-- /.breadcrumb -->
 
+            <li class="active">Author</li>
+
+        </ul><!-- /.breadcrumb -->
+
+    </div>
+
+
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title"><b>List Author</b></h3>
+            <button class="btn btn-sm btn-success" data-toggle="modal" id="addAuthor" style="float: right;">
+                <i class=" "></i>
+                Add
+
+            </button>
         </div>
-        
 
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title"><b>List Author</b></h3>
-                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal-author" id="addAuthor" style="float: right;">
-                    <i class=" "></i>
-                    Add
-                      
-                </button>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
+        <!-- /.box-header -->
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+
                 <thead>
-                  <tr>
+                <tr>
                     <th class="text-center">ID</th>
                     <th class="text-center">Name</th>
-                    
+
                     <th class="text-center">Edit</th>
                     <th class="text-center">Delete</th>
-                  </tr>
+                </tr>
                 </thead>
-                <tbody>
-            
-                  <tr>
-                    <td class="text-center">Trident</td>
-                    <td class="text-center">Internet
-                      Explorer 4.0
-                    </td>
+                <tbody id="body_list_author">
                     
-                    <td class="text-center">
-                      <a href="#" class="text-blue edit-role" data-toggle="modal" data-target="#editModal-author">
-                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                      </a>
-                    </td>
-                    <td class="text-center">
-                      <a class="text-red" href="#" data-toggle="modal" data-target="#deleteModal-author">
-                        <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                      </a>
-                    </td>
-                  </tr>
-                    
-                </tbody>
+                    @foreach($list as $author)
+
+                        <tr>
+                            <td class="text-center">{{$author->id}}</td>
+                            <td class="text-center">{{$author->name}}</td>
+                            <td class="text-center">
+                                <a href="#" class="text-blue" id="<?php echo $author->id; ?>" name="{{$author->name}}" data-type="update-author" data-toggle="modal">
+                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                </a>
+                            </td>
+                            
+                            <td class="text-center">
+                                <a class="text-red" href="#" id="<?php echo $author->id; ?>" data-type="delete-author" data-toggle="modal">
+                                    <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+
+                    @endforeach
                 
-              </table>
-            </div>
-            <!-- /.box-body -->
+                </tbody>
+
+            </table>
         </div>
-        <!-- /.box -->
-    
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
     <!-- /.content -->
 
-<div class="modal fade" id="myModal-author" role="dialog">
+
+    
+<div class="modal fade" id="myModal-author" author="dialog">
     <div class="modal-dialog">
 
-        <form method="get" id="form-role">
-            {{csrf_field()}}
+        <!-- <form id="form-author"> -->
+            <!-- {{csrf_field()}} -->
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
@@ -89,7 +97,7 @@
                                     <label class="col-sm-4 control-label no-padding-right" for="form-field-1" style="margin-top: 22px;">Name:</label>
 
                                     <div class="col-sm-7">
-                                        <input type="text" placeholder="Enter input data ..." class="form-control"  name="type-role" id="type-role" style="width: 350px; margin-top: 15px;"/>
+                                        <input type="text" placeholder="Enter input data ..." class="form-control"  name="type-author" id="type-author" style="width: 350px; margin-top: 15px;"/>
                                     </div>
                                 </div>
 
@@ -102,25 +110,26 @@
                 <br/>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button class="btn btn-info" type="submit" id="add-role">
+                    <button class="btn btn-info" type="submit" id="add-author">
                         <i class="ace-icon fa fa-check bigger-110"></i>
                         Add
                     </button>
                 </div>
             </div>
-        </form>
+        <!-- </form> -->
     </div>
 </div>
 
-<div class="modal fade" id="editModal-author" role="dialog">
+<div class="modal fade" id="editModal-author" author="dialog">
     <div class="modal-dialog">
 
-        <form action="" method="get">
+        <!-- <form> -->
                     
-            <input type="hidden" name="_method" value="patch">
-            {{csrf_field()}}
+            
+            <!-- {{csrf_field()}} -->
             <!-- Modal content-->
             <div class="modal-content">
+                <input type="hidden" name="_method" value="patch">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title"> Edit Author</h4>
@@ -136,7 +145,7 @@
                                     <label class="col-sm-4 control-label no-padding-right" for="form-field-1" style="margin-top:  12px;">Name: </label>
 
                                     <div class="col-sm-8">
-                                        <input type="text" placeholder="Enter input data ..." class="form-control" name="role-type" id="role-type" style="width: 350px; margin-top: 5px;" />
+                                        <input type="text" placeholder="Enter input data ..." class="form-control" name="author-type" id="author-type" style="width: 350px; margin-top: 5px;" />
                                     </div>
                                 </div>
 
@@ -148,25 +157,25 @@
                 </div>  
                 <br/>
                 <div class="modal-footer">
-                    <input type="hidden" id="role-id" name="role-id" value="" />
+                    <input type="hidden" id="author-id" name="author-id" value="" />
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button class="btn btn-info" type="submit" id="edit-role">
+                    <button class="btn btn-info" type="submit" id="edit-author">
                         <i class="ace-icon fa fa-check bigger-110"></i>
                         Edit
                     </button>
                 </div>
             </div>
-        </form>
+        <!-- </form> -->
     </div>
 </div>
 
-<div class="modal fade" id="deleteModal-author" role="dialog">
+<div class="modal fade" id="deleteModal-author" author="dialog">
             <div class="modal-dialog">
                 
                 <div class="modal-content">
-                    <form method="get" class="form-delete">
+                    <!-- <form > -->
                         <input type="hidden" name="_method" value="delete">
-                        {{csrf_field()}}
+                        <!-- {{csrf_field()}} -->
                     
                 <!-- Modal content-->
                 
@@ -188,26 +197,92 @@
                         </div>  
                         
                         <div class="modal-footer">
-                            <input type="hidden" id="role-delete" value="" />
+                            <input type="hidden" id="author-delete" value="" />
                             <button class="btn btn-white btn-round pull-left" data-dismiss="modal">
                                 <i class="ace-icon fa fa-times red2"></i>
                                 No
                             </button>
-                            <button class="btn btn-white btn-warning btn-bold" id="_delete-role">
+                            <button class="btn btn-white btn-warning btn-bold" id="_delete-author">
                                 <i class="ace-icon fa fa-trash-o bigger-120 orange"></i>
                                 Yes
                             </button>
                             
                         </div>
-                    </form>
+                    <!-- </form> -->
                         
                     
                 </div>
             </div>
 </div>
 
+<!-- <script>
+    jQuery(function($){
+        $.ajax({
+                    
+                url: '/api/v1/authors/'+'all',
+                type: 'get',
+                dataType: 'json',
+                success: function(data) {
+                    var output = "";
+                    for(var i = 0; i < data.length; i++){
+
+                        output +=   "<tr>"
+                                        +"<td class='text-center'>"+data[i].id+"</td>"
+                                        +"<td class='text-center'>"+data[i].name+"</td>"
+                                        
+                                        +"<td class='text-center'>"
+                                            +"<a href='#' class='text-blue' data-toggle='modal' id_edit_author="+data[i].id+" data-type='update-author'>"
+                                                +"<i class='ace-icon fa fa-pencil bigger-130'></i>"
+                                            +"</a>"
+                                        +"</td>"
+                                        +"<td class='text-center'>"
+                                            +"<a href='#' class='text-red delete_author' id_delete_author="+data[i].id+" data-type='delete-author'>"
+                                                +"<i class='ace-icon fa fa-trash-o bigger-130'></i>"
+                                            +"</a>"
+                                        +"</td>"
+                                        
+                                    +"</tr>";
+
+                    }
+                    $('#body_list_author').html(output);
+                    // alert('success');
+                },
+                error: function(err){
+                    alert(1);
+                }
+        });
+    });
+</script> -->
+
 
 @endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -10,10 +10,15 @@ namespace App\Decorators\AccountDecorators\CreateAccount;
 
 
 use App\Decorators\EloquentCreateTransactionDecorator;
+use App\Services\Service;
 use Illuminate\Database\Eloquent\Model;
 
 class CreateUserDecorator extends EloquentCreateTransactionDecorator
 {
+    public function __construct(CreateUserProxy $service)
+    {
+        parent::__construct($service);
+    }
 
     public function attachCreate(Model &$model, $attributes): bool
     {

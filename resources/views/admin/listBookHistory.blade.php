@@ -21,7 +21,7 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title"><b>List Book History</b></h3>
-                <!-- <button class="btn btn-sm btn-success" data-toggle="modal" id="addAuthorBook" style="float: right;">
+                <!-- <button class="btn btn-sm btn-success" data-toggle="modal" id="addhistoryBook" style="float: right;">
                     <i class=" "></i>
                     Add
                       
@@ -41,24 +41,27 @@
                 </thead>
                 <tbody>
             
-                  <tr>
-                    <td class="text-center">Trident</td>
-                    <td class="text-center">Internet
-                      Explorer 4.0
-                    </td>
-                    <td class="text-center">1</td>
-                    
-                    <td class="text-center">
-                      <a href="#" class="text-blue edit-role" data-target="#editModal-BookHistory" data-toggle="modal">
-                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                      </a>
-                    </td>
-                    <td class="text-center">
-                      <a class="text-red" href="#" data-toggle="modal" data-target="#deleteModal-BookHistory">
-                        <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                      </a>
-                    </td>
-                  </tr>
+                  @foreach($list as $history)
+
+                        <tr>
+                            <td class="text-center">{{$history->id}}</td>
+                            <td class="text-center">{{$history->bookCopy_id}}</td>
+                            <td class="text-center">{{$history->user_id}}</td>
+                            <td class="text-center">
+                                <a href="#" class="text-blue" id="<?php echo $history->id; ?>" bookCopy_id="{{$history->bookCopy_id}}" user_id="{{$history->user_id}}" data-type="update-history" data-toggle="modal">
+                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                </a>
+                            </td>
+                            
+                            <td class="text-center">
+                                <a class="text-red" href="#" id="<?php echo $history->id; ?>" data-type="delete-history" data-toggle="modal">
+                                    <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+
+                    @endforeach
                     
                 </tbody>
                 

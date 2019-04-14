@@ -78,6 +78,11 @@ Route::prefix('v1')->group(function () {
             'uses' => 'API\AuthorController@delete',
             'as' => 'api/v1/authors/delete'
         ]);
+
+        Route::get('all', [
+            'uses' => 'API\AuthorController@all',
+            'as' => 'api/v1/authors/all'
+        ]);
     });
 
     Route::prefix('publishers')->group(function () {
@@ -99,6 +104,11 @@ Route::prefix('v1')->group(function () {
         Route::delete('delete/{id?}', [
             'uses' => 'API\PublisherController@delete',
             'as' => 'api/v1/publishers/delete'
+        ]);
+
+        Route::get('all', [
+            'uses' => 'API\PublisherController@all',
+            'as' => 'api/v1/publishers/all'
         ]);
     });
 

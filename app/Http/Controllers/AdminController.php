@@ -3,6 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Author;
+use App\Models\Role;
+use App\Models\Publisher;
+use App\Models\Genre;
+use App\Models\User;
+use App\Models\Book;
+use App\Models\BookHistory;
+
 
 class AdminController extends Controller
 {
@@ -13,11 +21,27 @@ class AdminController extends Controller
     }
 
     public function getListRole(){
-    	return view('admin.listRole');
+
+        $data['list'] = Role::paginate(10);
+        return view('admin.listRole', $data);
+    	
     }
 
     public function getListUser(){
-    	return view('admin.listUser');
+
+        $data['list'] = User::paginate(10);
+        return view('admin.listUser', $data);
+    	
+    }
+
+    public function getListBook(){
+
+        $data['list'] = Book::paginate(10);
+        $data['listP'] = Publisher::all();
+        $data['listA'] = Author::all();
+        $data['listG'] = Genre::all();
+        return view('admin.listBook', $data);
+        
     }
 
     public function getListBookQuantity(){
@@ -33,15 +57,22 @@ class AdminController extends Controller
     }
 
     public function getListPublisher(){
-    	return view('admin.listPublisher');
+        
+        $data['list'] = Publisher::paginate(10);
+        return view('admin.listPublisher', $data);
+    	
     }
 
     public function getListAuthor(){
-    	return view('admin.listAuthor');
+        $data['list'] = Author::paginate(10);
+        return view('admin.listAuthor', $data);
     }
 
     public function getListGenre(){
-    	return view('admin.listGenre');
+
+        $data['list'] = Genre::paginate(10);
+        return view('admin.listGenre', $data);
+    	
     }
 
     public function getListImage(){
@@ -61,7 +92,10 @@ class AdminController extends Controller
     }
 
     public function getListBookHistory(){
-    	return view('admin.listBookHistory');
+
+        $data['list'] = BookHistory::paginate(10);
+        return view('admin.listBookHistory', $data);
+    	
     }
 
 }

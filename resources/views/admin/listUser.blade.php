@@ -2,7 +2,7 @@
 @section('content')
 
     <!-- Main content -->
-        
+
         <div class="breadcrumbs ace-save-state" id="breadcrumbs">
             <ul class="breadcrumb">
                 <li>
@@ -19,14 +19,14 @@
 
         </div>
 
-       
+
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title"><b>List User</b></h3>
-                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal-member" id="addUser" style="float: right;">
+                <button class="btn btn-sm btn-success" data-toggle="modal" id="addUser" style="float: right;">
                     <i class=" "></i>
                     Add
-                      
+
                 </button>
             </div>
             <!-- /.box-header -->
@@ -43,41 +43,45 @@
                       <th class="text-center">Delete</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                      <td class="text-center">Trident</td>
-                      <td class="text-center">Internet
-                        Explorer 4.0
-                      </td>
-                      <td class="text-center">Win 95+</td>
-                      <td class="text-center">1234</td>
-                      <td class="text-center">1</td>
-                      <td class="text-center">
-                      <a href="#" class="text-blue edit-role" data-toggle="modal" data-target="#editModal-member">
-                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                      </a>
-                    </td>
-                    <td class="text-center">
-                      <a class="text-red" href="#" data-toggle="modal" data-target="#deleteModal-member">
-                        <i class="ace-icon fa fa-trash-o bigger-130"></i>
-                      </a>
-                    </td>
-                    </tr>
-                    
+                <tbody id="body_list_user">
+                    @foreach($list as $user)
+
+                        <tr>
+                            <td class="text-center">{{$user->id}}</td>
+                            <td class="text-center">{{$user->name}}</td>
+                            <td class="text-center">{{$user->email}}</td>
+                            <td class="text-center">{{$user->password}}</td>
+                            <td class="text-center">{{$user->role_id}}</td>
+                            <td class="text-center">
+                                <a href="#" class="text-blue" id="<?php echo $user->id; ?>" name="{{$user->name}}" email="{{$user->email}}" password="{{$user->password}}" role_id="{{$user->role_id}}" data-type="update-user" data-toggle="modal">
+                                    <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                </a>
+                            </td>
+                            
+                            <td class="text-center">
+                                <a class="text-red" href="#" id="<?php echo $user->id; ?>" data-type="delete-user" data-toggle="modal">
+                                    <i class="ace-icon fa fa-trash-o bigger-130"></i>
+                                </a>
+
+                            </td>
+                        </tr>
+
+                    @endforeach
+
                 </tbody>
-                
+
               </table>
             </div>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
-    
+
     <!-- /.content -->
 
-<div class="modal fade" id="myModal-member" role="dialog">
+<div class="modal fade" id="myModal-user" role="dialog">
     <div class="modal-dialog">
 
-        <form action="" method="get" id="form-member">
+        <form action="" method="get" id="form-user">
             <!-- Modal content-->
             {{csrf_field()}}
             <div class="modal-content">
@@ -95,7 +99,7 @@
                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1" style="margin-top: 5px;">Name: </label>
 
                                     <div class="col-sm-9" style="margin-left: -15px; width: 380px;">
-                                        <input type="text" id="email-member" placeholder="Enter name ..." class="form-control" name="email-member"/>
+                                        <input type="text" id="email-user" placeholder="Enter name ..." class="form-control" name="email-user"/>
                                     </div>
                                 </div>
 
@@ -105,7 +109,7 @@
                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1" style="margin-top: 5px;">Email: </label>
 
                                     <div class="col-sm-9" style="margin-left: -15px; width: 380px;">
-                                        <input type="text" id="password-member" placeholder="Enter email ..." class="form-control" name="password-member"/>
+                                        <input type="text" id="password-user" placeholder="Enter email ..." class="form-control" name="password-user"/>
                                     </div>
                                 </div>
 
@@ -116,7 +120,7 @@
                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1" style="margin-top: 5px;">Password: </label>
 
                                     <div class="col-sm-9" style="margin-left: -15px; width: 380px;">
-                                        <input type="text" id="first_name-member" placeholder="Enter password ..." class="form-control" name="first-name"/>
+                                        <input type="text" id="first_name-user" placeholder="Enter password ..." class="form-control" name="first-name"/>
                                     </div>
                                 </div>
 
@@ -126,11 +130,11 @@
                                 <div class="form-group">
                                     <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password2" style="margin-top: 5px;">Role ID:</label>
                                     <!-- <div class="col-xs-12 col-sm-9" style="width: 300px;">
-                                        <select class="form-control" id="role_id-member" name="role_id-member">
+                                        <select class="form-control" id="role_id-user" name="role_id-user">
                                             <option value="">1</option>
                                             <option value="">2</option>
                                             <option value="">3</option>
-                                    
+
                                         </select>
                                     </div> -->
 
@@ -155,11 +159,11 @@
                         </div>
                     </div>
 
-                </div>  
+                </div>
                 <br/>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <button class="btn btn-info" type="submit" id="add-member">
+                    <button class="btn btn-info" type="submit" id="add-user">
                         <i class="ace-icon fa fa-check bigger-110"></i>
                         Add
                     </button>
@@ -169,7 +173,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="editModal-member" role="dialog">
+<div class="modal fade" id="editModal-user" role="dialog">
     <div class="modal-dialog">
 
         <form method="get" action="">
@@ -191,7 +195,7 @@
                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1" style="margin-top: 5px;">Name: </label>
 
                                     <div class="col-sm-9" style="margin-left: -15px; width: 380px;">
-                                        <input type="text" id="email-member" placeholder="Enter name ..." class="form-control" name="email-member"/>
+                                        <input type="text" id="email-user" placeholder="Enter name ..." class="form-control" name="email-user"/>
                                     </div>
                                 </div>
 
@@ -201,7 +205,7 @@
                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1" style="margin-top: 5px;">Email: </label>
 
                                     <div class="col-sm-9" style="margin-left: -15px; width: 380px;">
-                                        <input type="text" id="password-member" placeholder="Enter email ..." class="form-control" name="password-member"/>
+                                        <input type="text" id="password-user" placeholder="Enter email ..." class="form-control" name="password-user"/>
                                     </div>
                                 </div>
 
@@ -212,7 +216,7 @@
                                     <label class="col-sm-3 control-label no-padding-right" for="form-field-1" style="margin-top: 5px;">Password: </label>
 
                                     <div class="col-sm-9" style="margin-left: -15px; width: 380px;">
-                                        <input type="text" id="first_name-member" placeholder="Enter password ..." class="form-control" name="first-name"/>
+                                        <input type="text" id="first_name-user" placeholder="Enter password ..." class="form-control" name="first-name"/>
                                     </div>
                                 </div>
 
@@ -222,11 +226,11 @@
                                 <div class="form-group">
                                     <label class="control-label col-xs-12 col-sm-3 no-padding-right" for="password2" style="margin-top: 5px;">Role ID:</label>
                                     <!-- <div class="col-xs-12 col-sm-9" style="width: 300px;">
-                                        <select class="form-control" id="role_id-member" name="role_id-member">
+                                        <select class="form-control" id="role_id-user" name="role_id-user">
                                             <option value="">1</option>
                                             <option value="">2</option>
                                             <option value="">3</option>
-                                    
+
                                         </select>
                                     </div> -->
 
@@ -251,10 +255,10 @@
                         </div>
                     </div>
 
-                </div>   
+                </div>
                 <br/>
                 <div class="modal-footer">
-                    <input type="hidden" id="member-id" name="member-id" value="" />
+                    <input type="hidden" id="user-id" name="user-id" value="" />
                     <input type="hidden" id="_email" value="" />
                     <input type="hidden" id="_password" value="" />
                     <input type="hidden" id="_firt-name" value="" />
@@ -263,7 +267,7 @@
                     <input type="hidden" id="_role-id" value="" />
                     <input type="hidden" id="_image-id" value="" />
                     <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                    <input class="btn btn-info" type="submit" value="Edit" id="_edit-member" >
+                    <input class="btn btn-info" type="submit" value="Edit" id="_edit-user" >
 
                 </div>
             </div>
@@ -272,22 +276,22 @@
 </div>
 
 
-<div class="modal fade" id="deleteModal-member" role="dialog">
+<div class="modal fade" id="deleteModal-user" role="dialog">
     <div class="modal-dialog">
-        
+
         <div class="modal-content">
             <form method="get" class="form-delete">
                 <input type="hidden" name="_method" value="delete">
                 {{csrf_field()}}
-            
+
         <!-- Modal content-->
-        
+
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Confirm</h4>
                 </div>
                 <div class="modal-body">
-                    
+
                     <span id="form_output"></span>
                     <div class="row">
                         <div class="col-xs-12">
@@ -297,23 +301,23 @@
                         </div>
                     </div>
 
-                </div>  
-                
+                </div>
+
                 <div class="modal-footer">
-                    <input type="hidden" id="member-delete" value="" />
+                    <input type="hidden" id="user-delete" value="" />
                     <button class="btn btn-white btn-round pull-left" data-dismiss="modal">
                         <i class="ace-icon fa fa-times red2"></i>
                         No
                     </button>
-                    <button class="btn btn-white btn-warning btn-bold" id="_delete-member">
+                    <button class="btn btn-white btn-warning btn-bold" id="_delete-user">
                         <i class="ace-icon fa fa-trash-o bigger-120 orange"></i>
                         Yes
                     </button>
-                    
+
                 </div>
             </form>
-                
-            
+
+
         </div>
     </div>
 </div>

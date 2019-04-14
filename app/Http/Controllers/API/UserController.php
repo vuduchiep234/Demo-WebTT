@@ -9,7 +9,8 @@
 namespace App\Http\Controllers\API;
 
 
-use App\Decorators\AccountDecorators\LoginDecorator;
+use App\Decorators\AccountDecorators\CreateAccount\CreateUserProxy;
+use App\Decorators\AccountDecorators\Login\LoginDecorator;
 use App\Http\Controllers\Requests\API\User\UserDeleteRequest;
 use App\Http\Controllers\Requests\API\User\UserGetRequest;
 use App\Http\Controllers\Requests\API\User\UserLoginRequest;
@@ -31,7 +32,13 @@ class UserController extends APIController
 
     public function post(UserPostRequest $request)
     {
-        return parent::_post($request);
+        /**
+         * @var UserService $userService
+         */
+        $userService = $this->getService();
+        $userProxy = new CreateUserProxy($userService);
+
+        return $userProxy->createNewModel($request->all());
     }
 
     public function patch(UserPatchRequest $request, int $id = null)

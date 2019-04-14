@@ -16,7 +16,7 @@ class CheckHistoryHandler extends BookHistoryHandler
     private static $MISSING_USER_ID_ERROR_MESSAGE = 'Missing userId key in handler attributes';
     private static $MISSING_BOOKS_ERROR_MESSAGE = 'Missing books key in handler attributes';
     private static $INVALID_QUANTITY_ERROR_MESSAGE = 'Invalid input quantity';
-    private static $ALLOWED_BORROW_NUMBER = 1;
+    private static $ALLOWED_BORROW_NUMBER = 5;
 
     public function handle(array &$attributes): HandlerResponse
     {

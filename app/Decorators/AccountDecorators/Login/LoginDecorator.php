@@ -6,15 +6,19 @@
  * Time: 2:51 AM
  */
 
-namespace App\Decorators\AccountDecorators;
+namespace App\Decorators\AccountDecorators\Login;
 
 
+use App\Decorators\AccountDecorators\EloquentUserDecorator;
 use Illuminate\Database\Eloquent\Model;
 
 class LoginDecorator extends EloquentUserDecorator
 {
     public function getModel(array $attributes, $id): ?Model
     {
+        $password = $attributes['password'];
+        $hashPassword = hash('md5', $password);
+
         $pairs = [
             [
                 'needle' => 'email',
@@ -22,7 +26,7 @@ class LoginDecorator extends EloquentUserDecorator
             ],
             [
                 'needle' => 'password',
-                'value' => $attributes['password']
+                'value' => $hashPassword
             ],
         ];
         $userService = $this->getService();
